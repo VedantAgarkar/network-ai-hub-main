@@ -28,7 +28,7 @@ const About = () => {
                   <div className="relative pl-6 border-l-2 border-muted">
                     <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 bg-muted rounded-full" />
                     <p className="font-semibold text-foreground">SSC (80%)</p>
-                    <p className="text-sm text-muted-foreground">Completed</p>
+                    <p className="text-sm text-muted-foreground">M.S.M English School, Malkapur , Completed 2023</p>
                   </div>
                 </div>
               </CardContent>
