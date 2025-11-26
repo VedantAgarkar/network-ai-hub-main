@@ -22,7 +22,7 @@ const About = () => {
                   <div className="relative pl-6 border-l-2 border-primary/20">
                     <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 bg-primary rounded-full" />
                     <p className="font-semibold text-foreground">Diploma in Computer Science</p>
-                    <p className="text-sm text-muted-foreground">Padm. Dr. V. B. Kolte College of Engineering</p>
+                    <p className="text-sm text-muted-foreground">Padm. Dr. V. B. Kolte College of Engineering (MSBTE)</p>
                     <p className="text-sm text-muted-foreground">Expected: 2026</p>
                   </div>
                   <div className="relative pl-6 border-l-2 border-muted">
