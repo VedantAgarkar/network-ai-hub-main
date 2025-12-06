@@ -6,7 +6,8 @@ import legalEasyImage from "@/assets/legaleasy-project.jpg";
 const projects = [
   {
     title: "LegalEasy",
-    description: "Modern legal assistance platform with luxury law-chic branding that makes legal information clear and accessible.",
+    description:
+      "Modern legal assistance platform with luxury law-chic branding that makes legal information clear and accessible.",
     image: legalEasyImage,
     features: [
       "AI-generated legal summaries",
@@ -17,7 +18,9 @@ const projects = [
       "Team collaboration features",
     ],
     tech: ["Python", "Streamlit", "AI/ML", "NLP"],
-    purpose: "Democratizing legal information through AI-powered analysis and clear, accessible summaries.",
+    purpose:
+      "Democratizing legal information through AI-powered analysis and clear, accessible summaries.",
+    link: "https://www.linkedin.com/posts/vedant-agarkar-786b81310_ai-lawtech-legaltech-activity-7366793768605237250-c_R3?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE8yFxYB6qGF2N55dXaXVhk-LWSgocRRm4E",
   },
 ];
 
@@ -53,7 +56,9 @@ const Projects = () => {
                   <CardContent className="p-8 space-y-6">
                     <div>
                       <h3 className="text-3xl font-bold mb-2">{project.title}</h3>
-                      <p className="text-foreground/80 leading-relaxed">{project.description}</p>
+                      <p className="text-foreground/80 leading-relaxed">
+                        {project.description}
+                      </p>
                     </div>
 
                     <div className="space-y-4">
@@ -77,7 +82,9 @@ const Projects = () => {
                           <FileText className="h-4 w-4" />
                           Purpose
                         </h4>
-                        <p className="text-sm text-foreground/80 leading-relaxed">{project.purpose}</p>
+                        <p className="text-sm text-foreground/80 leading-relaxed">
+                          {project.purpose}
+                        </p>
                       </div>
 
                       <div className="flex flex-wrap gap-2">
@@ -92,10 +99,17 @@ const Projects = () => {
                       </div>
                     </div>
 
-                    <Button className="w-full sm:w-auto group">
-                      View Project Details
-                      <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                    </Button>
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <Button className="w-full sm:w-auto group">
+                        View Project Details
+                        <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                      </Button>
+                    </a>
                   </CardContent>
                 </div>
               </Card>
