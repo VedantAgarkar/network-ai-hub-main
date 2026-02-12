@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useDayNight } from "@/hooks/useDayNight"; 
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -15,6 +16,7 @@ const navItems = [
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const isDaytime = useDayNight();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,13 +33,17 @@ const Navigation = () => {
     element?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const navBgClass = isScrolled
+    ? (isDaytime ? "bg-white/95 border-purple-100" : "bg-[#1a1425]/95 border-purple-900/30") + " backdrop-blur-md shadow-lg border-b"
+    : "bg-transparent";
+    
+  // Text color: Darker purple on day+scrolled (white bg), otherwise Lighter purple (dark bg or transparent)
+  const textColorClass = (isScrolled && isDaytime) ? "text-purple-600 hover:text-purple-500" : "text-purple-400 hover:text-purple-300";
+  const logoColorClass = (isScrolled && isDaytime) ? "from-purple-600 to-indigo-600" : "from-primary to-accent-foreground";
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/95 backdrop-blur-md shadow-lg border-b border-border"
-          : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBgClass}`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
@@ -47,7 +53,7 @@ const Navigation = () => {
               e.preventDefault();
               handleNavClick("#home");
             }}
-            className="text-2xl font-bold bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent"
+            className={`text-2xl font-bold bg-gradient-to-r ${logoColorClass} bg-clip-text text-transparent transition-all duration-300`}
           >
             VA
           </a>
@@ -61,7 +67,7 @@ const Navigation = () => {
                   e.preventDefault();
                   handleNavClick(item.href);
                 }}
-                className="px-4 py-2 text-purple-400 font-bold hover:text-purple-300 transition-colors rounded-lg hover:bg-purple-500/10"
+                className={`px-4 py-2 font-bold transition-colors rounded-lg hover:bg-purple-500/10 ${textColorClass}`}
               >
                 {item.label}
               </a>
@@ -74,12 +80,12 @@ const Navigation = () => {
             className="md:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X className="h-6 w-6 text-purple-400" /> : <Menu className="h-6 w-6 text-purple-400" />}
+            {isOpen ? <X className={`h-6 w-6 ${textColorClass}`} /> : <Menu className={`h-6 w-6 ${textColorClass}`} />}
           </Button>
         </div>
 
         {isOpen && (
-          <div className="md:hidden py-4 border-t border-border animate-fade-in">
+          <div className={`md:hidden py-4 border-t animate-fade-in ${isDaytime ? 'border-purple-100' : 'border-purple-900/30'}`}>
             <div className="flex flex-col gap-2">
               {navItems.map((item) => (
                 <a
@@ -89,7 +95,7 @@ const Navigation = () => {
                     e.preventDefault();
                     handleNavClick(item.href);
                   }}
-                  className="px-4 py-3 text-purple-400 font-bold hover:text-purple-300 hover:bg-purple-500/10 rounded-lg transition-colors"
+                  className={`px-4 py-3 font-bold rounded-lg transition-colors hover:bg-purple-500/10 ${textColorClass}`}
                 >
                   {item.label}
                 </a>

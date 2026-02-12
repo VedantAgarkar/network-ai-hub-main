@@ -1,6 +1,7 @@
 import { ExternalLink, FileText, Shield, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useDayNight } from "@/hooks/useDayNight";
 import legalEasyImage from "@/assets/legaleasy-project.jpg";
 import gpuImage from "@/assets/gpu.png";
 import dropImage from "@/assets/drop.png";
@@ -63,14 +64,23 @@ const projects = [
 ];
 
 const Projects = () => {
+  const isDaytime = useDayNight();
+
   return (
-    <section id="projects" className="py-20 bg-card">
+    <section 
+      id="projects" 
+      className="py-20 transition-colors duration-1000"
+      style={{ 
+        backgroundColor: isDaytime ? '#ffffff' : '#170d27',
+        color: isDaytime ? '#1a1a1a' : '#ffffff'
+      }}
+    >
       <div className="container px-4">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center space-y-4 animate-fade-in">
             <h2 className="text-4xl lg:text-5xl font-bold">Featured Projects</h2>
             <div className="h-1 w-20 bg-gradient-to-r from-primary to-accent-foreground mx-auto rounded-full" />
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className={`max-w-2xl mx-auto ${isDaytime ? 'text-muted-foreground' : 'text-gray-300'}`}>
               Building solutions that combine AI innovation with practical applications
             </p>
           </div>
@@ -79,7 +89,9 @@ const Projects = () => {
             {projects.map((project, index) => (
               <Card
                 key={index}
-                className="border-primary/20 overflow-hidden hover:shadow-2xl transition-all duration-300"
+                className={`border-primary/20 overflow-hidden hover:shadow-2xl transition-all duration-300 ${
+                  isDaytime ? 'bg-card' : 'bg-[#2a2438] border-purple-500/30'
+                }`}
               >
                 <div className="grid lg:grid-cols-2 gap-6">
                   <div className="relative h-64 lg:h-full overflow-hidden">
@@ -93,8 +105,8 @@ const Projects = () => {
 
                   <CardContent className="p-8 space-y-6">
                     <div>
-                      <h3 className="text-3xl font-bold mb-2">{project.title}</h3>
-                      <p className="text-foreground/80 leading-relaxed">
+                      <h3 className={`text-3xl font-bold mb-2 ${isDaytime ? 'text-foreground' : 'text-white'}`}>{project.title}</h3>
+                      <p className={`leading-relaxed ${isDaytime ? 'text-foreground/80' : 'text-gray-300'}`}>
                         {project.description}
                       </p>
                     </div>
@@ -109,7 +121,7 @@ const Projects = () => {
                           {project.features.map((feature, idx) => (
                             <div key={idx} className="flex items-start gap-2">
                               <span className="h-1.5 w-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                              <span className="text-sm text-foreground/80">{feature}</span>
+                              <span className={`text-sm ${isDaytime ? 'text-foreground/80' : 'text-gray-400'}`}>{feature}</span>
                             </div>
                           ))}
                         </div>
@@ -120,7 +132,7 @@ const Projects = () => {
                           <FileText className="h-4 w-4" />
                           Purpose
                         </h4>
-                        <p className="text-sm text-foreground/80 leading-relaxed">
+                        <p className={`text-sm leading-relaxed ${isDaytime ? 'text-foreground/80' : 'text-gray-400'}`}>
                           {project.purpose}
                         </p>
                       </div>
@@ -154,11 +166,13 @@ const Projects = () => {
             ))}
           </div>
 
-          <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5 animate-fade-in">
+          <Card className={`border-primary/20 animate-fade-in ${
+            isDaytime ? 'bg-gradient-to-br from-primary/5 to-accent/5' : 'bg-[#2a2438] border-purple-500/30'
+          }`}>
             <CardContent className="p-8 text-center space-y-4">
               <Users className="h-12 w-12 text-primary mx-auto" />
-              <h3 className="text-2xl font-bold">More Projects Coming Soon</h3>
-              <p className="text-foreground/80 max-w-2xl mx-auto">
+              <h3 className={`text-2xl font-bold ${isDaytime ? 'text-foreground' : 'text-white'}`}>More Projects Coming Soon</h3>
+              <p className={`max-w-2xl mx-auto ${isDaytime ? 'text-foreground/80' : 'text-gray-300'}`}>
                 Currently working on additional innovative projects including AI-powered solutions,
                 automation tools, and more. Stay tuned for updates!
               </p>

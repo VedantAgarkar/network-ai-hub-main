@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useDayNight } from "@/hooks/useDayNight";
 
 const contactInfo = [
   {
@@ -29,6 +30,7 @@ const contactInfo = [
 
 const Contact = () => {
   const { toast } = useToast();
+  const isDaytime = useDayNight();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -45,13 +47,20 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-background">
+    <section 
+      id="contact" 
+      className="py-20 transition-colors duration-1000"
+      style={{ 
+        backgroundColor: isDaytime ? '#ffffff' : '#170d27',
+        color: isDaytime ? '#1a1a1a' : '#ffffff'
+      }}
+    >
       <div className="container px-4">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center space-y-4 animate-fade-in">
             <h2 className="text-4xl lg:text-5xl font-bold">Let's Connect</h2>
             <div className="h-1 w-20 bg-gradient-to-r from-primary to-accent-foreground mx-auto rounded-full" />
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className={`max-w-2xl mx-auto ${isDaytime ? 'text-muted-foreground' : 'text-gray-300'}`}>
               Have a project in mind or want to discuss collaboration opportunities? 
               I'd love to hear from you!
             </p>
@@ -61,14 +70,16 @@ const Contact = () => {
             {contactInfo.map((info, index) => (
               <Card
                 key={index}
-                className="border-primary/20 bg-card hover:shadow-xl transition-all duration-300 hover:scale-105"
+                className={`border-primary/20 hover:shadow-xl transition-all duration-300 hover:scale-105 ${
+                  isDaytime ? 'bg-card' : 'bg-[#2a2438] border-purple-500/30'
+                }`}
               >
                 <CardContent className="p-6 text-center space-y-4">
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
                     <info.icon className="h-8 w-8 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground mb-2">{info.label}</h3>
+                    <h3 className={`font-semibold mb-2 ${isDaytime ? 'text-foreground' : 'text-white'}`}>{info.label}</h3>
                     <a
                       href={info.href}
                       target="_blank"
@@ -83,12 +94,14 @@ const Contact = () => {
             ))}
           </div>
 
-          <Card className="border-primary/20 bg-card animate-fade-in">
+          <Card className={`border-primary/20 animate-fade-in ${
+            isDaytime ? 'bg-card' : 'bg-[#2a2438] border-purple-500/30'
+          }`}>
             <CardContent className="p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium text-foreground">
+                    <label htmlFor="name" className={`text-sm font-medium ${isDaytime ? 'text-foreground' : 'text-gray-300'}`}>
                       Your Name
                     </label>
                     <Input
@@ -97,11 +110,11 @@ const Contact = () => {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required
-                      className="border-primary/20"
+                      className={`border-primary/20 ${!isDaytime && 'bg-[#1a1425] border-purple-500/30 text-white placeholder:text-gray-500'}`}
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium text-foreground">
+                    <label htmlFor="email" className={`text-sm font-medium ${isDaytime ? 'text-foreground' : 'text-gray-300'}`}>
                       Your Email
                     </label>
                     <Input
@@ -111,12 +124,12 @@ const Contact = () => {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
-                      className="border-primary/20"
+                      className={`border-primary/20 ${!isDaytime && 'bg-[#1a1425] border-purple-500/30 text-white placeholder:text-gray-500'}`}
                     />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium text-foreground">
+                  <label htmlFor="message" className={`text-sm font-medium ${isDaytime ? 'text-foreground' : 'text-gray-300'}`}>
                     Your Message
                   </label>
                   <Textarea
@@ -125,7 +138,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
-                    className="min-h-[150px] border-primary/20"
+                    className={`min-h-[150px] border-primary/20 ${!isDaytime && 'bg-[#1a1425] border-purple-500/30 text-white placeholder:text-gray-500'}`}
                   />
                 </div>
                 <Button type="submit" size="lg" className="w-full sm:w-auto group">

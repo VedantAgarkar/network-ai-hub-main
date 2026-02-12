@@ -45,7 +45,10 @@ const skillCategories = [
   },
 ];
 
+import { useDayNight } from "@/hooks/useDayNight";
+
 const Skills = () => {
+  const isDaytime = useDayNight();
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [animatedLevels, setAnimatedLevels] = useState<{ [key: string]: number }>({});
 
@@ -72,13 +75,20 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="py-20 bg-background">
+    <section 
+      id="skills" 
+      className="py-20 transition-colors duration-1000"
+      style={{ 
+        backgroundColor: isDaytime ? '#ffffff' : '#170d27',
+        color: isDaytime ? '#1a1a1a' : '#ffffff'
+      }}
+    >
       <div className="container px-4">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center space-y-4 animate-fade-in">
             <h2 className="text-4xl lg:text-5xl font-bold">Skills & Expertise</h2>
             <div className="h-1 w-20 bg-gradient-to-r from-primary to-accent-foreground mx-auto rounded-full" />
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className={`max-w-2xl mx-auto ${isDaytime ? 'text-muted-foreground' : 'text-gray-300'}`}>
               A comprehensive blend of technical proficiency and interpersonal excellence
             </p>
           </div>
@@ -87,7 +97,9 @@ const Skills = () => {
             {skillCategories.map((category, categoryIndex) => (
               <Card
                 key={categoryIndex}
-                className={`border-primary/20 bg-card transition-all duration-500 cursor-pointer ${
+                className={`border-primary/20 transition-all duration-500 cursor-pointer ${
+                  isDaytime ? 'bg-card' : 'bg-[#2a2438] border-purple-500/30'
+                } ${
                   hoveredCard === categoryIndex 
                     ? 'shadow-2xl shadow-primary/20 scale-105 z-50' 
                     : 'hover:shadow-xl'
@@ -105,7 +117,7 @@ const Skills = () => {
                     <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                       <category.icon className="h-6 w-6 text-primary" />
                     </div>
-                    <h3 className="text-2xl font-bold">{category.title}</h3>
+                    <h3 className={`text-2xl font-bold ${isDaytime ? 'text-foreground' : 'text-white'}`}>{category.title}</h3>
                   </div>
 
                   {/* Detailed description - shows on hover */}
@@ -116,7 +128,7 @@ const Skills = () => {
                         : 'max-h-0 opacity-0'
                     }`}
                   >
-                    <p className="text-sm text-muted-foreground leading-relaxed italic border-l-2 border-primary/50 pl-4">
+                    <p className={`text-sm leading-relaxed italic border-l-2 border-primary/50 pl-4 ${isDaytime ? 'text-muted-foreground' : 'text-gray-300'}`}>
                       {category.description}
                     </p>
                   </div>
@@ -127,8 +139,8 @@ const Skills = () => {
                       return (
                         <div key={skillIndex} className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <span className="font-medium text-foreground">{skill.name}</span>
-                            <span className="text-sm text-muted-foreground">
+                            <span className={`font-medium ${isDaytime ? 'text-foreground' : 'text-white'}`}>{skill.name}</span>
+                            <span className={`text-sm ${isDaytime ? 'text-muted-foreground' : 'text-gray-400'}`}>
                               {hoveredCard === categoryIndex ? `${displayLevel}%` : `${skill.level}%`}
                             </span>
                           </div>

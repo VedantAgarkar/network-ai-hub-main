@@ -15,4 +15,45 @@
   transform-origin: center;
   will-change: transform;
   transform: rotate(var(--rotate));
+  /* Smooth color transition */
+  transition: background-color 1s ease;
+  border-radius: 2px;
+}
+
+/* Keyframes for smooth color cycling */
+@keyframes colorCycle {
+  0% {
+    background-color: #1a0b3b;
+  }
+
+  /* Darker Purple */
+  20% {
+    background-color: #4c1d95;
+  }
+
+  /* Darker Violet */
+  40% {
+    background-color: #831843;
+  }
+
+  /* Darker Magenta */
+  60% {
+    background-color: #0e7490;
+  }
+
+  /* Darker Cyan */
+  80% {
+    background-color: #451a1a;
+  }
+
+  /* Darker Brown */
+  100% {
+    background-color: #1a0b3b;
+  }
+}
+
+/* Class to apply the animation to children spans */
+.magnet-rainbow span {
+  animation: colorCycle 4s infinite linear !important;
+  /* Ensure this overrides inline styles if needed */
 }
