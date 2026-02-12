@@ -1,10 +1,12 @@
 import { Code2, Network, MessageSquare, Layers } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
 
 const skillCategories = [
   {
     title: "Programming Languages",
     icon: Code2,
+    description: "Proficient in multiple programming languages with strong foundations in object-oriented and procedural programming. Experienced in building robust applications and solving complex algorithmic challenges.",
     skills: [
       { name: "Python", level: 90 },
       { name: "C", level: 70 },
@@ -14,6 +16,7 @@ const skillCategories = [
   {
     title: "Frameworks & Tools",
     icon: Layers,
+    description: "Skilled in leveraging modern frameworks and development tools to build scalable applications. Expert in creating interactive data-driven web applications and implementing machine learning solutions.",
     skills: [
       { name: "Streamlit", level: 85 },
       { name: "AI/ML Libraries", level: 80 },
@@ -23,6 +26,7 @@ const skillCategories = [
   {
     title: "Networking",
     icon: Network,
+    description: "Deep understanding of network protocols, architecture, and infrastructure. CCNA-level knowledge with hands-on experience in designing and troubleshooting network systems for optimal performance.",
     skills: [
       { name: "CCNA Knowledge", level: 75 },
       { name: "Network Architecture", level: 70 },
@@ -32,6 +36,7 @@ const skillCategories = [
   {
     title: "Soft Skills",
     icon: MessageSquare,
+    description: "Strong interpersonal and communication abilities that facilitate effective collaboration and project leadership. Proven track record in presenting technical concepts to diverse audiences.",
     skills: [
       { name: "Communication", level: 90 },
       { name: "Leadership", level: 88 },
@@ -41,6 +46,31 @@ const skillCategories = [
 ];
 
 const Skills = () => {
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [animatedLevels, setAnimatedLevels] = useState<{ [key: string]: number }>({});
+
+  const handleMouseEnter = (categoryIndex: number) => {
+    setHoveredCard(categoryIndex);
+    // Randomize skill levels for animation
+    const category = skillCategories[categoryIndex];
+    const randomLevels: { [key: string]: number } = {};
+    category.skills.forEach((skill, idx) => {
+      const key = `${categoryIndex}-${idx}`;
+      randomLevels[key] = Math.floor(Math.random() * 40) + 50; // Random between 50-90
+    });
+    setAnimatedLevels(randomLevels);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredCard(null);
+    setAnimatedLevels({});
+  };
+
+  const getSkillLevel = (categoryIndex: number, skillIndex: number, originalLevel: number) => {
+    const key = `${categoryIndex}-${skillIndex}`;
+    return hoveredCard === categoryIndex ? (animatedLevels[key] || originalLevel) : originalLevel;
+  };
+
   return (
     <section id="skills" className="py-20 bg-background">
       <div className="container px-4">
@@ -54,10 +84,21 @@ const Skills = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 animate-fade-in">
-            {skillCategories.map((category, index) => (
+            {skillCategories.map((category, categoryIndex) => (
               <Card
-                key={index}
-                className="border-primary/20 bg-card hover:shadow-xl transition-all duration-300"
+                key={categoryIndex}
+                className={`border-primary/20 bg-card transition-all duration-500 cursor-pointer ${
+                  hoveredCard === categoryIndex 
+                    ? 'shadow-2xl shadow-primary/20 scale-105 z-50' 
+                    : 'hover:shadow-xl'
+                }`}
+                style={{
+                  transform: hoveredCard === categoryIndex ? 'scale(1.05)' : 'scale(1)',
+                  position: 'relative',
+                  zIndex: hoveredCard === categoryIndex ? 50 : 1,
+                }}
+                onMouseEnter={() => handleMouseEnter(categoryIndex)}
+                onMouseLeave={handleMouseLeave}
               >
                 <CardContent className="p-6 space-y-6">
                   <div className="flex items-center gap-3">
@@ -67,21 +108,39 @@ const Skills = () => {
                     <h3 className="text-2xl font-bold">{category.title}</h3>
                   </div>
 
+                  {/* Detailed description - shows on hover */}
+                  <div 
+                    className={`overflow-hidden transition-all duration-500 ${
+                      hoveredCard === categoryIndex 
+                        ? 'max-h-40 opacity-100' 
+                        : 'max-h-0 opacity-0'
+                    }`}
+                  >
+                    <p className="text-sm text-muted-foreground leading-relaxed italic border-l-2 border-primary/50 pl-4">
+                      {category.description}
+                    </p>
+                  </div>
+
                   <div className="space-y-4">
-                    {category.skills.map((skill, idx) => (
-                      <div key={idx} className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium text-foreground">{skill.name}</span>
-                          <span className="text-sm text-muted-foreground">{skill.level}%</span>
+                    {category.skills.map((skill, skillIndex) => {
+                      const displayLevel = getSkillLevel(categoryIndex, skillIndex, skill.level);
+                      return (
+                        <div key={skillIndex} className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium text-foreground">{skill.name}</span>
+                            <span className="text-sm text-muted-foreground">
+                              {hoveredCard === categoryIndex ? `${displayLevel}%` : `${skill.level}%`}
+                            </span>
+                          </div>
+                          <div className="h-2 bg-muted rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-gradient-to-r from-primary to-accent-foreground rounded-full transition-all duration-700 ease-in-out"
+                              style={{ width: `${displayLevel}%` }}
+                            />
+                          </div>
                         </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-primary to-accent-foreground rounded-full transition-all duration-1000 ease-out"
-                            style={{ width: `${skill.level}%` }}
-                          />
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </CardContent>
               </Card>
