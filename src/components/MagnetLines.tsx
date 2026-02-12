@@ -33,25 +33,26 @@ const MagnetLines: FC<MagnetLinesProps> = ({
     const items = container.querySelectorAll<HTMLSpanElement>('span');
     const itemCenters: { x: number; y: number }[] = [];
 
-    // Cache the center positions of all items to avoid layout thrashing
+    // Cache positions relative to the document (not viewport)
     const cachePositions = () => {
       items.forEach((item, index) => {
         const rect = item.getBoundingClientRect();
         itemCenters[index] = {
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2
+          x: rect.left + rect.width / 2 + window.scrollX,
+          y: rect.top + rect.height / 2 + window.scrollY
         };
       });
     };
 
-    // Initial cache
-    cachePositions();
+    // Initial cache - slight delay ensures layout is stable
+    setTimeout(cachePositions, 50);
 
     const onPointerMove = (x: number, y: number) => {
       items.forEach((item, index) => {
         const center = itemCenters[index];
         if (!center) return;
 
+        // Calculate distance relative to document coordinates
         const b = x - center.x;
         const a = y - center.y;
         const c = Math.sqrt(a * a + b * b) || 1;
@@ -63,24 +64,20 @@ const MagnetLines: FC<MagnetLinesProps> = ({
 
     const handlePointerMove = (e: PointerEvent) => {
       requestAnimationFrame(() => {
-        onPointerMove(e.clientX, e.clientY);
+        // Use pageX/Y which are document relative
+        onPointerMove(e.pageX, e.pageY);
       });
     };
     
     window.addEventListener('pointermove', handlePointerMove);
-    window.addEventListener('resize', cachePositions); // Re-cache on resize
-
-    // Trigger initial alignment
-    if (items.length) {
-      const middleIndex = Math.floor(items.length / 2);
-      if (itemCenters[middleIndex]) {
-        onPointerMove(itemCenters[middleIndex].x, itemCenters[middleIndex].y);
-      }
-    }
+    window.addEventListener('resize', cachePositions);
+    // Also re-cache on scroll just in case layout shifts without resize (optional but safer)
+    window.addEventListener('scroll', cachePositions); 
 
     return () => {
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('resize', cachePositions);
+      window.removeEventListener('scroll', cachePositions);
     };
   }, []);
 
