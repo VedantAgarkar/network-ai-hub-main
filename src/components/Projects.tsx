@@ -2,6 +2,8 @@ import { ExternalLink, FileText, Shield, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import legalEasyImage from "@/assets/legaleasy-project.jpg";
+import gpuImage from "@/assets/gpu.png";
+import dropImage from "@/assets/drop.png";
 
 const projects = [
   {
@@ -21,6 +23,42 @@ const projects = [
     purpose:
       "Democratizing legal information through AI-powered analysis and clear, accessible summaries.",
     link: "https://www.linkedin.com/posts/vedant-agarkar-786b81310_ai-lawtech-legaltech-activity-7366793768605237250-c_R3?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE8yFxYB6qGF2N55dXaXVhk-LWSgocRRm4E",
+  },
+  {
+    title: "AutoGPUSwitch",
+    description:
+      "Intelligent GPU power mode automation for gaming laptops that eliminates manual GPU switching based on power status.",
+    image: gpuImage,
+    features: [
+      "Automatic NVIDIA GPU detection",
+      "Power-based auto switching (charger/battery)",
+      "Global keyboard shortcuts (Ctrl+Alt+G/B)",
+      "System tray integration",
+      "Windows startup automation",
+      "Portable installer (.exe)",
+    ],
+    tech: ["Python", "PowerShell", "PyInstaller", "Windows APIs"],
+    purpose:
+      "Automates GPU switching for gaming laptops without MUX switches, improving battery life and performance without manual intervention.",
+    link: "https://www.linkedin.com/posts/vedant-agarkar-786b81310_softwaredevelopment-pythondevelopment-automation-activity-7422722309427433472-YuKB?utm_source=share&utm_medium=member_android&rcm=ACoAAE8yFxYB6qGF2N55dXaXVhk-LWSgocRRm4E",
+  },
+  {
+    title: "LocalDrop",
+    description:
+      "Secure, PIN-protected local file/folder sharing application for fast wireless transfers between devices on the same network.",
+    image: dropImage,
+    features: [
+      "Bi-directional file transfer (send & receive)",
+      "Large file support with 52MB chunking",
+      "Real-time progress tracking with speed & ETA",
+      "PIN-based authentication",
+      "QR code generation for easy pairing",
+      "Automatic folder compression/decompression",
+    ],
+    tech: ["Python", "Tkinter", "Socket Programming", "HTTP Server"],
+    purpose:
+      "Fast, secure peer-to-peer file transfers without cloud storage or internet dependency. Perfect for local network collaboration.",
+    link: "https://www.linkedin.com/posts/vedant-agarkar-786b81310_android-softwaredevelopment-python-activity-7427738219712008192-EIVC?utm_source=share&utm_medium=member_android&rcm=ACoAAE8yFxYB6qGF2N55dXaXVhk-LWSgocRRm4E",
   },
 ];
 
@@ -121,8 +159,8 @@ const Projects = () => {
               <Users className="h-12 w-12 text-primary mx-auto" />
               <h3 className="text-2xl font-bold">More Projects Coming Soon</h3>
               <p className="text-foreground/80 max-w-2xl mx-auto">
-                Currently working on additional innovative projects including Neuralet Watchdog 
-                and other AI-powered solutions. Stay tuned for updates!
+                Currently working on additional innovative projects including AI-powered solutions,
+                automation tools, and more. Stay tuned for updates!
               </p>
             </CardContent>
           </Card>
