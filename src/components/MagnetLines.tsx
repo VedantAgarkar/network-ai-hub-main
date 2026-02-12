@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, CSSProperties } from 'react';
+import { useRef, useEffect, FC, CSSProperties } from 'react';
 import './MagnetLines.css';
 
 interface MagnetLinesProps {
@@ -13,7 +13,7 @@ interface MagnetLinesProps {
   style?: CSSProperties;
 }
 
-const MagnetLines: React.FC<MagnetLinesProps> = ({
+const MagnetLines: FC<MagnetLinesProps> = ({
   rows = 9,
   columns = 9,
   containerSize = '80vmin',
@@ -32,31 +32,32 @@ const MagnetLines: React.FC<MagnetLinesProps> = ({
 
     const items = container.querySelectorAll<HTMLSpanElement>('span');
 
-    const onPointerMove = (pointer: { x: number; y: number }) => {
+    const onPointerMove = (x: number, y: number) => {
       items.forEach(item => {
         const rect = item.getBoundingClientRect();
         const centerX = rect.x + rect.width / 2;
         const centerY = rect.y + rect.height / 2;
 
-        const b = pointer.x - centerX;
-        const a = pointer.y - centerY;
+        const b = x - centerX;
+        const a = y - centerY;
         const c = Math.sqrt(a * a + b * b) || 1;
-        const r = ((Math.acos(b / c) * 180) / Math.PI) * (pointer.y > centerY ? 1 : -1);
+        const r = ((Math.acos(b / c) * 180) / Math.PI) * (y > centerY ? 1 : -1);
 
         item.style.setProperty('--rotate', `${r}deg`);
       });
     };
 
     const handlePointerMove = (e: PointerEvent) => {
-      onPointerMove({ x: e.x, y: e.y });
+      onPointerMove(e.clientX, e.clientY);
     };
 
     window.addEventListener('pointermove', handlePointerMove);
 
+    // Initial position trigger (center of viewport)
     if (items.length) {
       const middleIndex = Math.floor(items.length / 2);
       const rect = items[middleIndex].getBoundingClientRect();
-      onPointerMove({ x: rect.x, y: rect.y });
+      onPointerMove(rect.x, rect.y);
     }
 
     return () => {
