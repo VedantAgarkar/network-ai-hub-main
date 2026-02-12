@@ -61,7 +61,7 @@ const Navigation = () => {
                   e.preventDefault();
                   handleNavClick(item.href);
                 }}
-                className="px-4 py-2 text-foreground/80 hover:text-primary transition-colors rounded-lg hover:bg-primary/5"
+                className="px-4 py-2 text-white font-bold hover:text-gray-300 transition-colors rounded-lg hover:bg-white/10"
               >
                 {item.label}
               </a>
@@ -74,7 +74,7 @@ const Navigation = () => {
             className="md:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isOpen ? <X className="h-6 w-6 text-white" /> : <Menu className="h-6 w-6 text-white" />}
           </Button>
         </div>
 
@@ -89,7 +89,7 @@ const Navigation = () => {
                     e.preventDefault();
                     handleNavClick(item.href);
                   }}
-                  className="px-4 py-3 text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
+                  className="px-4 py-3 text-white font-bold hover:text-gray-300 hover:bg-white/10 rounded-lg transition-colors"
                 >
                   {item.label}
                 </a>
