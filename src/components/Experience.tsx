@@ -1,7 +1,7 @@
 import { Briefcase, MapPin, Calendar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import MagnetLines from './MagnetLines';
-import { useState, useEffect } from 'react';
+import Particles from './Particles';
+import { useDayNight } from "@/hooks/useDayNight";
 
 const experiences = [
   {
@@ -23,40 +23,31 @@ const experiences = [
 ];
 
 const Experience = () => {
-  const [isDaytime, setIsDaytime] = useState(true);
-
-  useEffect(() => {
-    const checkTime = () => {
-      const hour = new Date().getHours();
-      setIsDaytime(hour >= 6 && hour < 18);
-    };
-    
-    checkTime();
-    const interval = setInterval(checkTime, 60000);
-    return () => clearInterval(interval);
-  }, []);
+  const isDaytime = useDayNight();
 
   return (
-    <section 
-      id="experience" 
+    <section
+      id="experience"
       className="py-20 relative overflow-hidden transition-colors duration-1000"
-      style={{ 
+      style={{
         backgroundColor: isDaytime ? '#ffffff' : '#170d27',
         color: isDaytime ? '#1a1a1a' : '#ffffff'
       }}
     >
-      {/* MagnetLines Background */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center opacity-30 pointer-events-none">
-        <MagnetLines
-          rows={20}
-          columns={40}
-          containerSize="150%"
-          lineColor="tomato"
-          lineWidth="3px"
-          lineHeight="30px"
-          baseAngle={0}
-          className="magnet-rainbow"
-          style={{ width: "100vw", height: "100%" }}
+      {/* Particles Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Particles
+          particleCount={860}
+          particleSpread={7}
+          speed={0.61}
+          particleColors={["#f3f631", "#c60c0c", "#8f2bf3", "#43b823"]}
+          moveParticlesOnHover={false}
+          particleHoverFactor={1.1}
+          alphaParticles={false}
+          particleBaseSize={100}
+          sizeRandomness={1.6}
+          cameraDistance={21}
+          disableRotation={false}
         />
       </div>
 
@@ -75,7 +66,7 @@ const Experience = () => {
               <Card
                 key={index}
                 className={`border-primary/20 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] ${
-                  isDaytime ? 'bg-card' : 'bg-[#2a2438] border-purple-500/30'
+                  isDaytime ? 'bg-card/80 backdrop-blur-sm' : 'bg-[#2a2438]/80 backdrop-blur-sm border-purple-500/30'
                 }`}
               >
                 <CardContent className="p-6">
