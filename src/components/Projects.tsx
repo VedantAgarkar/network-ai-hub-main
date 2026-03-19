@@ -5,8 +5,43 @@ import { useDayNight } from "@/hooks/useDayNight";
 import legalEasyImage from "@/assets/legaleasy-project.jpg";
 import gpuImage from "@/assets/gpu.png";
 import dropImage from "@/assets/drop.png";
+import compImage from "@/assets/comp.png";
 
-const projects = [
+type Project = {
+  title: string;
+  description: string;
+  image: string;
+  role?: string;
+  timeline?: string;
+  features: string[];
+  tech: string[];
+  purpose: string;
+  link: string;
+};
+
+const projects: Project[] = [
+  {
+    title: "CompanionAI",
+    description:
+      "AI-Powered Decision Intelligence Platform empowering users with domain-specific, actionable advice via an intuitive, multilingual chat interface.",
+    image: compImage,
+    role: "Creator & Full Stack AI Developer",
+    timeline: "30-Week Development Cycle",
+    features: [
+      "Domain-Specific AI Personas",
+      "Multilingual Magic (i18n)",
+      "Secure Document Analysis",
+      "Premium UI/UX & Animations",
+      "Secure Backend & Admin Dashboard",
+      "Dynamic Prompt Injection",
+      "Resilient Text Extraction",
+      "State Management & Persistence",
+    ],
+    tech: ["React", "Tailwind CSS", "Framer Motion", "FastAPI", "OpenRouter API", "SQLAlchemy"],
+    purpose:
+      "A full-stack, AI-driven advisory platform designed to democratize access to high-level strategic guidance for business owners, founders, and farmers.",
+    link: "https://companionai-sigma.vercel.app/",
+  },
   {
     title: "LegalEasy",
     description:
@@ -112,6 +147,23 @@ const Projects = () => {
                     </div>
 
                     <div className="space-y-4">
+                      {(project.role || project.timeline) && (
+                        <div className="flex flex-col sm:flex-row sm:gap-6 gap-2 bg-primary/5 p-3 rounded-lg border border-primary/10">
+                          {project.role && (
+                            <div className={`text-sm ${isDaytime ? 'text-foreground/80' : 'text-gray-300'}`}>
+                              <span className="font-semibold text-primary mr-2">Role:</span>
+                              {project.role}
+                            </div>
+                          )}
+                          {project.timeline && (
+                            <div className={`text-sm ${isDaytime ? 'text-foreground/80' : 'text-gray-300'}`}>
+                              <span className="font-semibold text-primary mr-2">Timeline:</span>
+                              {project.timeline}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
                       <div>
                         <h4 className="font-semibold text-primary mb-3 flex items-center gap-2">
                           <Shield className="h-4 w-4" />
