@@ -1,4 +1,5 @@
-import { ExternalLink, FileText, Shield, Users } from "lucide-react";
+import { useState } from "react";
+import { ExternalLink, FileText, Shield, Users, Layers } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useDayNight } from "@/hooks/useDayNight";
@@ -17,6 +18,7 @@ type Project = {
   tech: string[];
   purpose: string;
   link: string;
+  category: string;
 };
 
 const projects: Project[] = [
@@ -41,6 +43,7 @@ const projects: Project[] = [
     purpose:
       "A full-stack, AI-driven advisory platform designed to democratize access to high-level strategic guidance for business owners, founders, and farmers.",
     link: "https://companionai-sigma.vercel.app/",
+    category: "AI & Web",
   },
   {
     title: "LegalEasy",
@@ -59,6 +62,7 @@ const projects: Project[] = [
     purpose:
       "Democratizing legal information through AI-powered analysis and clear, accessible summaries.",
     link: "https://www.linkedin.com/posts/vedant-agarkar-786b81310_ai-lawtech-legaltech-activity-7366793768605237250-c_R3?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE8yFxYB6qGF2N55dXaXVhk-LWSgocRRm4E",
+    category: "AI & Web",
   },
   {
     title: "AutoGPUSwitch",
@@ -77,6 +81,7 @@ const projects: Project[] = [
     purpose:
       "Automates GPU switching for gaming laptops without MUX switches, improving battery life and performance without manual intervention.",
     link: "https://www.linkedin.com/posts/vedant-agarkar-786b81310_softwaredevelopment-pythondevelopment-automation-activity-7422722309427433472-YuKB?utm_source=share&utm_medium=member_android&rcm=ACoAAE8yFxYB6qGF2N55dXaXVhk-LWSgocRRm4E",
+    category: "Automation",
   },
   {
     title: "LocalDrop",
@@ -95,11 +100,19 @@ const projects: Project[] = [
     purpose:
       "Fast, secure peer-to-peer file transfers without cloud storage or internet dependency. Perfect for local network collaboration.",
     link: "https://www.linkedin.com/posts/vedant-agarkar-786b81310_android-softwaredevelopment-python-activity-7427738219712008192-EIVC?utm_source=share&utm_medium=member_android&rcm=ACoAAE8yFxYB6qGF2N55dXaXVhk-LWSgocRRm4E",
+    category: "Networking",
   },
 ];
 
 const Projects = () => {
   const isDaytime = useDayNight();
+  const [filter, setFilter] = useState("All");
+
+  const categories = ["All", "AI & Web", "Automation", "Networking"];
+
+  const filteredProjects = projects.filter(
+    (project) => filter === "All" || project.category === filter
+  );
 
   return (
     <section 
@@ -120,8 +133,26 @@ const Projects = () => {
             </p>
           </div>
 
+          <div className="flex flex-wrap justify-center gap-3 animate-fade-in">
+            {categories.map((cat) => (
+              <Button
+                key={cat}
+                variant={filter === cat ? "default" : "outline"}
+                onClick={() => setFilter(cat)}
+                className={`transition-all duration-300 ${
+                  filter === cat 
+                    ? 'shadow-[0_0_15px_rgba(var(--primary),0.5)] scale-105' 
+                    : isDaytime ? 'bg-white hover:bg-primary/5' : 'bg-[#2a2438] hover:bg-[#322c42] border-purple-500/30'
+                }`}
+              >
+                <Layers className="w-4 h-4 mr-2" />
+                {cat}
+              </Button>
+            ))}
+          </div>
+
           <div className="space-y-8 animate-fade-in">
-            {projects.map((project, index) => (
+            {filteredProjects.map((project, index) => (
               <Card
                 key={index}
                 className={`border-primary/20 overflow-hidden hover:shadow-2xl transition-all duration-300 ${

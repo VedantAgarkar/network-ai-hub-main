@@ -7,12 +7,14 @@ import Skills from "@/components/Skills";
 import Services from "@/components/Services";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import SocialDock from "@/components/SocialDock";
 
 const Index = () => {
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
       <Navigation />
+      <SocialDock />
       <Hero />
       <About />
       <Experience />

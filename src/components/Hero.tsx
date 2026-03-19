@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, Mail } from "lucide-react";
 import profileImage from "@/assets/profile.jpg";
 import LiquidChrome from './LiquidChrome';
 import { useState, useEffect } from 'react';
@@ -84,7 +84,7 @@ const Hero = () => {
               <Button
                 size="lg"
                 onClick={() => scrollToSection("projects")}
-                className="group"
+                className="group shadow-[0_0_15px_rgba(var(--primary),0.3)] transition-all hover:shadow-[0_0_25px_rgba(var(--primary),0.5)]"
               >
                 View Projects
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -92,10 +92,20 @@ const Hero = () => {
               <Button
                 size="lg"
                 variant="outline"
-                onClick={() => scrollToSection("contact")}
+                className="group border-primary/30 hover:border-primary/100 transition-all bg-background/20 backdrop-blur-sm"
+                onClick={() => window.open('/resume.pdf', '_blank')}
               >
-                <Download className="mr-2 h-4 w-4" />
-                Get in Touch
+                <Download className="mr-2 h-4 w-4 text-primary transition-transform group-hover:-translate-y-1" />
+                <span className="text-white">Resume</span>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => scrollToSection("contact")}
+                className="bg-background/20 backdrop-blur-sm border-white/10 hover:border-white/30"
+              >
+                <Mail className="mr-2 h-4 w-4 text-white" />
+                <span className="text-white">Contact</span>
               </Button>
             </div>
           </div>

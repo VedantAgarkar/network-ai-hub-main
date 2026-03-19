@@ -1,4 +1,4 @@
-import { GraduationCap, Award } from "lucide-react";
+import { GraduationCap, Award, MessageCircle, Mic, Network, BrainCircuit } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useDayNight } from "@/hooks/useDayNight";
 
@@ -33,7 +33,12 @@ const About = () => {
                   <GraduationCap className="h-6 w-6 text-primary" />
                 </div>
                 <h3 className={`text-2xl font-bold ${isDaytime ? 'text-foreground' : 'text-white'}`}>Education</h3>
-                <div className="space-y-4">
+                <div className="space-y-4 relative">
+                  {/* Glowing moving line behind timeline */}
+                  <div className="absolute left-[11px] top-6 bottom-6 w-[2px] bg-primary/10 hidden sm:block overflow-hidden">
+                    <div className="w-full h-24 bg-gradient-to-b from-transparent via-primary to-transparent animate-timeline-glow shadow-[0_0_15px_rgba(var(--primary),1)]" />
+                  </div>
+                  
                   <div className="relative pl-6 border-l-2 border-primary/20 pb-2">
                     <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 bg-primary rounded-full shadow-[0_0_10px_rgba(var(--primary),0.5)]" />
                     <p className={`font-semibold text-lg ${isDaytime ? 'text-foreground' : 'text-white'}`}>Diploma in Computer Science</p>
@@ -75,24 +80,21 @@ const About = () => {
                   <Award className="h-6 w-6 text-accent-foreground" />
                 </div>
                 <h3 className={`text-2xl font-bold ${isDaytime ? 'text-foreground' : 'text-white'}`}>Strengths</h3>
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <span className="h-1.5 w-1.5 bg-primary rounded-full mt-2" />
-                    <span className={`${isDaytime ? 'text-foreground/80' : 'text-gray-300'}`}>Strong communication and presentation skills</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="h-1.5 w-1.5 bg-primary rounded-full mt-2" />
-                    <span className={`${isDaytime ? 'text-foreground/80' : 'text-gray-300'}`}>Leadership experience as anchor and speaker</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="h-1.5 w-1.5 bg-primary rounded-full mt-2" />
-                    <span className={`${isDaytime ? 'text-foreground/80' : 'text-gray-300'}`}>CCNA networking knowledge</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="h-1.5 w-1.5 bg-primary rounded-full mt-2" />
-                    <span className={`${isDaytime ? 'text-foreground/80' : 'text-gray-300'}`}>AI/ML expertise with modern frameworks like Streamlit</span>
-                  </li>
-                </ul>
+                <div className="flex flex-col gap-3">
+                  {[
+                    { text: "Communication & Presentation", icon: MessageCircle, color: "text-blue-500", bg: "bg-blue-500/10", border: "border-blue-500/20" },
+                    { text: "Leadership (Anchor & Speaker)", icon: Mic, color: "text-purple-500", bg: "bg-purple-500/10", border: "border-purple-500/20" },
+                    { text: "CCNA Networking Knowledge", icon: Network, color: "text-green-500", bg: "bg-green-500/10", border: "border-green-500/20" },
+                    { text: "AI/ML Expertise (Streamlit)", icon: BrainCircuit, color: "text-orange-500", bg: "bg-orange-500/10", border: "border-orange-500/20" },
+                  ].map((strength, i) => (
+                    <div key={i} className={`flex items-center gap-3 p-3 rounded-lg border transition-all hover:translate-x-2 hover:shadow-md duration-300 ${isDaytime ? 'bg-white shadow-sm border-gray-100' : 'bg-[#1e1a2b] border-[#3a3448]'}`}>
+                      <div className={`p-2 rounded-md ${strength.bg} ${strength.border} border`}>
+                        <strength.icon className={`w-4 h-4 ${strength.color}`} />
+                      </div>
+                      <span className={`font-medium ${isDaytime ? 'text-foreground/80' : 'text-gray-300'}`}>{strength.text}</span>
+                    </div>
+                  ))}
+                </div>
               </CardContent>
             </Card>
           </div>
