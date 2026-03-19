@@ -34,11 +34,29 @@ const About = () => {
                 </div>
                 <h3 className={`text-2xl font-bold ${isDaytime ? 'text-foreground' : 'text-white'}`}>Education</h3>
                 <div className="space-y-4">
-                  <div className="relative pl-6 border-l-2 border-primary/20">
-                    <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 bg-primary rounded-full" />
-                    <p className={`font-semibold ${isDaytime ? 'text-foreground' : 'text-white'}`}>Diploma in Computer Science</p>
+                  <div className="relative pl-6 border-l-2 border-primary/20 pb-2">
+                    <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 bg-primary rounded-full shadow-[0_0_10px_rgba(var(--primary),0.5)]" />
+                    <p className={`font-semibold text-lg ${isDaytime ? 'text-foreground' : 'text-white'}`}>Diploma in Computer Science</p>
                     <p className={`text-sm ${isDaytime ? 'text-muted-foreground' : 'text-gray-400'}`}>Padm. Dr. V. B. Kolte College of Engineering (MSBTE)</p>
-                    <p className={`text-sm ${isDaytime ? 'text-muted-foreground' : 'text-gray-500'}`}>Expected: 2026</p>
+                    
+                    <div className="mt-4 mb-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {[
+                        { sem: "1st Sem", score: "81.29%" },
+                        { sem: "2nd Sem", score: "78.00%" },
+                        { sem: "3rd Sem", score: "86.00%" },
+                        { sem: "4th Sem", score: "84.24%" },
+                        { sem: "5th Sem", score: "92.82%" },
+                      ].map((item, i) => (
+                        <div key={i} className={`flex flex-col items-center justify-center py-2 px-1 text-center rounded-xl border transition-all hover:scale-105 hover:shadow-lg duration-300 ${
+                          isDaytime ? 'bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 shadow-sm' : 'bg-gradient-to-br from-[#2a2438] to-[#1e1a2b] border-purple-500/30 shadow-[0_4px_15px_rgba(168,85,247,0.1)]'
+                        }`}>
+                          <span className={`text-[10px] sm:text-xs uppercase tracking-wider font-extrabold ${isDaytime ? 'text-primary' : 'text-[#d8b4fe]'}`}>{item.sem}</span>
+                          <span className={`text-sm sm:text-base font-black mt-1 ${isDaytime ? 'text-foreground' : 'text-white'}`}>{item.score}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <p className={`text-sm font-medium ${isDaytime ? 'text-muted-foreground' : 'text-gray-500'}`}>Expected: 2026</p>
                   </div>
                   <div className="relative pl-6 border-l-2 border-muted">
                     <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 bg-muted rounded-full" />
